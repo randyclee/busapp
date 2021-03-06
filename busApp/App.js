@@ -1,37 +1,31 @@
+// In App.js in a new project
+
 import React, { Component } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator, createAppContainer } from '@react-navigation/stack';
 
-import MapView from 'react-native-maps';
-import MapViewDirections from 'react-native-maps-directions';
-
-
-const origin = {latitude: 37.3318456, longitude: -122.0296002};
-const destination = {latitude: 37.771707, longitude: -122.4053769};
-const GOOGLE_MAPS_APIKEY = 'AIzaSyCQqXJflchicdlH2Iq0AMnh126dBaz86dg';
+import HomeScreen from './src/screens/map/HomeScreen';
+import Map from './src/screens/map/Map';
 
 
-class App extends Component {
-
+export default class App extends React.Component {
   render() {
-    return (
-      <MapView style={styles.map} initialRegion={{
-          latitude:41.0082,
-          longitude:28.9784,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
-        }}
-        style={StyleSheet.absoluteFill}>
-
-        <MapViewDirections
-          origin={origin}
-          destination={destination}
-          apikey={GOOGLE_MAPS_APIKEY}
-        />
-      </MapView>
-    );
+    return <AppContainer />;
   }
 }
+
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: HomeScreen
+  },
+  About: {
+    screen: Map
+  }
+  initialRouteName: "HomeScreen"
+});
+
+const AppContainer = createAppContainer(AppNavigator);
 
 const styles = StyleSheet.create({
   container: {
@@ -41,5 +35,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default App;
