@@ -1,28 +1,43 @@
 import React, { Component } from 'react';
 import { Button, View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
-import { useNavigation, NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, createAppContainer } from '@react-navigation/stack';
-import getDirections from "react-native-google-maps-directions";
 
+const GOOGLE_MAPS_APIKEY = 'AIzaSyCQqXJflchicdlH2Iq0AMnh126dBaz86dg';
 
 class HomeScreen extends Component  {
 
   state = {
       origin: '',
-      destination: ''
+      destination: '',
+      distance:'hi'
    }
+
+
    handleOrigin = (text) => {
       this.setState({ origin: text })
    }
    handleDestination = (text) => {
       this.setState({ destination: text })
    }
+   handleDistance = (text) => {
+      this.setState({ distance: text })
+   }
    login = (email, pass) => {
       alert('email: ' + email + ' password: ' + pass)
    }
+
+   _onPressButton() {
+    fetch("https://maps.googleapis.com/maps/api/distancematrix/json?origins=17 mark wilson court&destinations=queens university&key=AIzaSyCQqXJflchicdlH2Iq0AMnh126dBaz86dg")
+    .then(response => response.json())
+    .then((responseJson)=> {
+      this.handleDistance(responseJson.rows[0].elements[0].distance)
+    })
+    .catch(error=>console.log(error))
+  }
+
    render() {
       return (
-
          <View style = {styles.container}>
            <View style={styles.title}>
              <Text style={styles.textStyle}>Bus Transit Application </Text>
@@ -44,8 +59,10 @@ class HomeScreen extends Component  {
 
             <TouchableOpacity
                style = {styles.submitButton}
-               onPress={() => this.props.navigation.navigate('Map', {origin: this.state.origin, destination: this.state.destination})}>
-               <Text style = {styles.submitButtonText}> Map </Text>
+               onPress = {
+                  () => this.login(this.state.email, this.state.password)
+               }>
+               <Text style = {styles.submitButtonText}> See on Map </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -53,46 +70,27 @@ class HomeScreen extends Component  {
                onPress = {
                   () => this.login(this.state.email, this.state.password)
                }>
-               <Text style = {styles.submitButtonText}> Police </Text>
+               <Text style = {styles.submitButtonText}> Bus Route </Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+               style = {styles.submitButton}
+               onPress = {
+                 this._onPressButton()
+               }>
+               <Text style = {styles.submitButtonText}> Calculate Cost </Text>
+            </TouchableOpacity>
+
+            <View style={styles.bottomView}>
+              <Text style={styles.textStyle}> {this.state.destionation} </Text>
+            </View>
 
             <TouchableOpacity
                style = {styles.submitButton}
                onPress = {
                   () => this.login(this.state.email, this.state.password)
                }>
-               <Text style = {styles.submitButtonText}> Driver </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-               style = {styles.submitButton}
-               onPress = {
-                 handleGetDirections = () => {
-                  const data = {
-
-                      params: [
-                          {
-                              key: "travelmode",
-                              value: "transit"  // may be "walking", "bicycling" or "transit" as well
-                          },
-                          {
-                              key: "dir_action",
-                              value: "navigate" // this instantly initializes navigation using the given travel mode
-                          },
-                          {
-                              key: "origin",
-                              value: this.state.origin
-                          },
-                          {
-                              key: "destination",
-                              value: this.state.destination
-                          }
-                      ]
-                  }
-                  getDirections(data)
-              }
-               }>
-               <Text style = {styles.submitButtonText}> Bus Times </Text>
+               <Text style = {styles.submitButtonText}> Pay </Text>
             </TouchableOpacity>
          </View>
       )
@@ -101,7 +99,6 @@ class HomeScreen extends Component  {
 
 
 export default HomeScreen;
-
 
 const styles = StyleSheet.create({
    container: {

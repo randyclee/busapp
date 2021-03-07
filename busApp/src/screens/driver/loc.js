@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Button, View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
-import { useNavigation, NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, createAppContainer } from '@react-navigation/stack';
-import getDirections from "react-native-google-maps-directions";
 
 
 class HomeScreen extends Component  {
-
   state = {
       origin: '',
       destination: ''
@@ -22,7 +20,6 @@ class HomeScreen extends Component  {
    }
    render() {
       return (
-
          <View style = {styles.container}>
            <View style={styles.title}>
              <Text style={styles.textStyle}>Bus Transit Application </Text>
@@ -44,8 +41,10 @@ class HomeScreen extends Component  {
 
             <TouchableOpacity
                style = {styles.submitButton}
-               onPress={() => this.props.navigation.navigate('Map', {origin: this.state.origin, destination: this.state.destination})}>
-               <Text style = {styles.submitButtonText}> Map </Text>
+               onPress = {
+                  () => this.login(this.state.email, this.state.password)
+               }>
+               <Text style = {styles.submitButtonText}> See on Map </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -53,46 +52,19 @@ class HomeScreen extends Component  {
                onPress = {
                   () => this.login(this.state.email, this.state.password)
                }>
-               <Text style = {styles.submitButtonText}> Police </Text>
+               <Text style = {styles.submitButtonText}> Bus Route </Text>
             </TouchableOpacity>
+
+            <View style={styles.bottomView}>
+              <Text style={styles.textStyle}>Total Cost: </Text>
+            </View>
 
             <TouchableOpacity
                style = {styles.submitButton}
                onPress = {
                   () => this.login(this.state.email, this.state.password)
                }>
-               <Text style = {styles.submitButtonText}> Driver </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-               style = {styles.submitButton}
-               onPress = {
-                 handleGetDirections = () => {
-                  const data = {
-
-                      params: [
-                          {
-                              key: "travelmode",
-                              value: "transit"  // may be "walking", "bicycling" or "transit" as well
-                          },
-                          {
-                              key: "dir_action",
-                              value: "navigate" // this instantly initializes navigation using the given travel mode
-                          },
-                          {
-                              key: "origin",
-                              value: this.state.origin
-                          },
-                          {
-                              key: "destination",
-                              value: this.state.destination
-                          }
-                      ]
-                  }
-                  getDirections(data)
-              }
-               }>
-               <Text style = {styles.submitButtonText}> Bus Times </Text>
+               <Text style = {styles.submitButtonText}> Pay </Text>
             </TouchableOpacity>
          </View>
       )
