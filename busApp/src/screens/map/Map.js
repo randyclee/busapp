@@ -10,6 +10,7 @@ const origin = "17 Mary Wilson Court";
 const destination = "73 Pathlane Avenue";
 const GOOGLE_MAPS_APIKEY = 'AIzaSyCQqXJflchicdlH2Iq0AMnh126dBaz86dg';
 
+const [text, setText] = useState('');
 
 
 export default class Map extends Component {
@@ -61,9 +62,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#F5FCFF'
 	},
-	welcome: {
-		fontSize: 20,
-		textAlign: 'center',
-		margin: 10
+  map: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#F5FCFF'
 	}
 });
