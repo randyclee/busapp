@@ -21,11 +21,20 @@ class HomeScreen extends Component  {
       alert('email: ' + email + ' password: ' + pass)
    }
    render() {
+     const { route, navigation } = this.props;
+     var payBool;
+      if(route.params=true){
+        payBool = true;
+      }
+      else {
+        payBool = false;
+      }
+
       return (
 
          <View style = {styles.container}>
            <View style={styles.title}>
-             <Text style={styles.textStyle}>Align Transit App </Text>
+             <Text style={styles.textStyle}>Bus Transit Application </Text>
            </View>
 
             <TextInput style = {styles.input}
@@ -78,7 +87,11 @@ class HomeScreen extends Component  {
                }>
                <Text style = {styles.submitButtonText}> Bus Times </Text>
             </TouchableOpacity>
-
+            <TouchableOpacity
+               style = {styles.submitButton}
+               onPress={() => this.props.navigation.navigate('Payment', {cost: this.state.cst})}>
+               <Text style = {styles.submitButtonText}> Payment Proof </Text>
+            </TouchableOpacity>
          </View>
       )
    }
