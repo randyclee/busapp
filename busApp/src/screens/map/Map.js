@@ -5,7 +5,7 @@ import { Button, Alert, StyleSheet, Text, View, TextInput, TouchableOpacity } fr
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions';
 
-const GOOGLE_MAPS_APIKEY = 'AIzaSyCQqXJflchicdlH2Iq0AMnh126dBaz86dg';
+const GOOGLE_MAPS_APIKEY = '';
 
 
 export default class Map extends Component {
